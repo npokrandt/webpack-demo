@@ -2,8 +2,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const path = require('path')
-const webpackPwaManifest = require('webpack-pwa-manifest')
-
+const WebpackPwaManifest = require('webpack-pwa-manifest')
+const {GenerateSW} = require('workbox-webpack-plugin')
+ 
 module.exports = {
   mode: 'production',
   entry: './src/js/main.js',
@@ -46,7 +47,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new webpackPwaManifest({
+    new WebpackPwaManifest({
       name: 'Robot image switcher',
       short_name: 'Robots',
       description: 'A cool app with different robot images',
@@ -59,6 +60,9 @@ module.exports = {
           sizes: [96, 128, 192, 256, 300]
         }
       ]
+    }),
+    new GenerateSW({
+      swDest: './sw.js'
     })
   ]
 }
